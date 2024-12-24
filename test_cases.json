@@ -1,0 +1,168 @@
+[
+    {
+        "description": "Simple file copy with no symlink or permission copy",
+        "source_directory": "test_src",
+        "destination_directory": "test_dest",
+        "copy_symlinks": false,
+        "copy_permissions": false,
+        "items": [
+            {
+                "name": "simple_file.txt",
+                "type": "file",
+                "content": "This is a basic test file.",
+                "permissions": 384
+            }
+        ]
+    },
+    {
+        "description": "Copy a file with no permissions and symlink in a single directory",
+        "source_directory": "test_src",
+        "destination_directory": "test_dest",
+        "copy_symlinks": true,
+        "copy_permissions": false,
+        "items": [
+            {
+                "name": "dir1",
+                "type": "directory",
+                "permissions": 493
+            },
+            {
+                "name": "dir1/file1.txt",
+                "type": "file",
+                "content": "File inside dir with symlink and permissions.",
+                "permissions": 420
+            },
+            {
+                "name": "dir1/link_to_file1",
+                "type": "symlink",
+                "target": "file1.txt"
+            }
+        ]
+    },
+    {
+        "description": "Copy directory structure with a nested file and symlink, permissions intact",
+        "source_directory": "test_src",
+        "destination_directory": "test_dest",
+        "copy_symlinks": true,
+        "copy_permissions": true,
+        "items": [
+            {
+                "name": "nested_dir",
+                "type": "directory",
+                "permissions": 493
+            },
+            {
+                "name": "nested_dir/nested_file.txt",
+                "type": "file",
+                "content": "A file in a nested directory.",
+                "permissions": 420
+            },
+            {
+                "name": "nested_dir/link_to_nested_file",
+                "type": "symlink",
+                "target": "nested_file.txt"
+            }
+        ]
+    },
+    {
+        "description": "Testing files with different permissions within directories",
+        "source_directory": "test_src",
+        "destination_directory": "test_dest",
+        "copy_symlinks": false,
+        "copy_permissions": true,
+        "items": [
+            {
+                "name": "dir2",
+                "type": "directory",
+                "permissions": 448
+            },
+            {
+                "name": "dir2/file2.txt",
+                "type": "file",
+                "content": "Another file with specific permissions.",
+                "permissions": 300
+            },
+            {
+                "name": "dir2/file3.txt",
+                "type": "file",
+                "content": "Yet another file with distinct permissions.",
+                "permissions": 256
+            }
+        ]
+    },
+    {
+        "description": "File with symbolic links to it and no permissions copied",
+        "source_directory": "test_src",
+        "destination_directory": "test_dest",
+        "copy_symlinks": false,
+        "copy_permissions": false,
+        "items": [
+            {
+                "name": "file4.txt",
+                "type": "file",
+                "content": "A file with symlink pointing to it.",
+                "permissions": 420
+            },
+            {
+                "name": "link_to_file4",
+                "type": "symlink",
+                "target": "file4.txt"
+            }
+        ]
+    },
+    {
+        "description": "Nested directories with varying permissions and symlinks",
+        "source_directory": "test_src",
+        "destination_directory": "test_dest",
+        "copy_symlinks": true,
+        "copy_permissions": true,
+        "items": [
+            {
+                "name": "dir3",
+                "type": "directory",
+                "permissions": 493
+            },
+            {
+                "name": "dir3/dir4",
+                "type": "directory",
+                "permissions": 420
+            },
+            {
+                "name": "dir3/dir4/file5.txt",
+                "type": "file",
+                "content": "A nested file with a symlink pointing to it.",
+                "permissions": 420
+            },
+            {
+                "name": "dir3/dir4/link_to_file5",
+                "type": "symlink",
+                "target": "file5.txt"
+            }
+        ]
+    },
+    {
+        "description": "Testing symlinks to directories and files with different permissions",
+        "source_directory": "test_src",
+        "destination_directory": "test_dest",
+        "copy_symlinks": true,
+        "copy_permissions": true,
+        "items": [
+            {
+                "name": "file6.txt",
+                "type": "file",
+                "content": "A simple text file.",
+                "permissions": 420
+            },
+            {
+                "name": "dir5",
+                "type": "directory",
+                "permissions": 493
+            },
+            {
+                "name": "dir5/link_to_file6",
+                "type": "symlink",
+                "target": "../file6.txt"
+            }
+        ]
+    }
+]

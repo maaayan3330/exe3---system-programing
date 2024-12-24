@@ -1,0 +1,1 @@
+File inside dir with symlink and permissions.
