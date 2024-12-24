@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
 #include <string.h>
@@ -61,9 +62,13 @@ void copy_file(const char *src, const char *dest, int copy_symlinks, int copy_pe
 
     close(src_fd);
     close(dest_fd);
+
+    if (copy_permissions && chmod(dest, stat_buf.st_mode) == -1) {
+        perror("chmod failed");
+    }
 }
 
-void create_directory(const char *path, int copy_permissions, mode_t mode) {
+void create_directory(const char *path, mode_t mode) {
     if (mkdir(path, mode) == -1 && errno != EEXIST) {
         perror("mkdir failed");
     }
@@ -83,7 +88,7 @@ void copy_directory(const char *src, const char *dest, int copy_symlinks, int co
         return;
     }
 
-    create_directory(dest, copy_permissions, copy_permissions ? src_stat.st_mode : 0755);
+    create_directory(dest, copy_permissions ? src_stat.st_mode : 0755);
 
     struct dirent *entry;
     while ((entry = readdir(dir)) != NULL) {
@@ -109,8 +114,4 @@ void copy_directory(const char *src, const char *dest, int copy_symlinks, int co
     }
 
     closedir(dir);
-
-    if (copy_permissions && chmod(dest, src_stat.st_mode) == -1) {
-        perror("chmod failed");
-    }
 }
