@@ -155,7 +155,8 @@ void copy_directory(const char *src, const char *dest, int copy_symlinks, int co
             }
         }
         closedir(test_dir);
-    } else if (errno != ENOENT) { // If the error is not "No such file or directory"
+    } else if (errno != ENOENT) { 
+        // If the error is not "No such file or directory"
         perror("Failed to access destination directory");
         return;
     }

@@ -1,3 +1,4 @@
+// Maayan Ifergan
 #include "copytree.h"
 #include <stdio.h>
 #include <stdlib.h>
