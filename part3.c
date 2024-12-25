@@ -1,8 +1,8 @@
+// Maayan Ifergan 212437453
 #include "copytree.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <bits/getopt_core.h>
+#include <string.h>
 
 void print_usage(const char *prog_name) {
     fprintf(stderr, "Usage: %s [-l] [-p] <source_directory> <destination_directory>\n", prog_name);
@@ -11,35 +11,37 @@ void print_usage(const char *prog_name) {
 }
 
 int main(int argc, char *argv[]) {
-    int opt;
     int copy_symlinks = 0;
     int copy_permissions = 0;
+    const char *src_dir = NULL;
+    const char *dest_dir = NULL;
 
-    while ((opt = getopt(argc, argv, "lp")) != -1) {
-        switch (opt) {
-            case 'l':
-                copy_symlinks = 1;
-                break;
-            case 'p':
-                copy_permissions = 1;
-                break;
-            default:
-                print_usage(argv[0]);
-                return EXIT_FAILURE;
+    // Parse command-line arguments manually
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-l") == 0) {
+            copy_symlinks = 1;
+        } else if (strcmp(argv[i], "-p") == 0) {
+            copy_permissions = 1;
+        } else if (src_dir == NULL) {
+            src_dir = argv[i];
+        } else if (dest_dir == NULL) {
+            dest_dir = argv[i];
+        } else {
+            // Too many arguments
+            print_usage(argv[0]);
+            return EXIT_FAILURE;
         }
     }
 
-    if (optind + 2 != argc) {
+    // Check that both source and destination directories are specified
+    if (src_dir == NULL || dest_dir == NULL) {
         print_usage(argv[0]);
         return EXIT_FAILURE;
     }
 
-    const char *src_dir = argv[optind];
-    const char *dest_dir = argv[optind + 1];
-
-    printf("Copying from '%s' to '%s'...\n", src_dir, dest_dir);
+    // Copy the directory tree
     copy_directory(src_dir, dest_dir, copy_symlinks, copy_permissions);
-    printf("Copy completed successfully.\n");
 
     return 0;
 }
+
