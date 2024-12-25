@@ -10,7 +10,7 @@
 #include <errno.h>
 #include <string.h>
 #include <limits.h>
-#include <libgen.h> // For dirname()
+#include <libgen.h> 
 
 #define PATH_MAX 4096
 
@@ -83,7 +83,6 @@ void copy_file(const char *src, const char *dest, int copy_symlinks, int copy_pe
     }
 }
 
-// Function to create directories recursively
 // Function to create directories recursively
 int create_directory_recursive(const char *path, mode_t mode) {
     if (!path || strlen(path) == 0) {
